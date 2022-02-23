@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+@tailwind components;
+
+@layer components {
+  .icon {
+    @apply h-9 w-9 text-blue-500 hover:bg-blue-100 px-[0.4rem] rounded-full transition ease-in-out cursor-pointer;
+  }
+  .postIcon {
+    @apply p-[7px] rounded-full text-gray-500 flex relative transition ease-in-out;
+  }
+  .footerButton {
+    @apply w-max text-gray-600 text-[0.850rem] hover:underline active:scale-95 cursor-pointer transition ease-out;
+  }
+}
