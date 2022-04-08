@@ -16,11 +16,20 @@ export default NextAuth({
   secret: process.env.JWT_SECRET,
   adapter: MongoDBAdapter(clientPromise),
   pages: {
-    signIn: "/login"
+    signIn: "/"
   },
   session: {
     strategy: "jwt",
   },
   debug: true,
+  callbacks: {
+    async session({ session, user, token }) {
+      session.username = session?.user?.name
+      .split(" ")
+      .join("")
+      .toLocaleLowerCase();
+      return session
+    },
+  }
 })
 

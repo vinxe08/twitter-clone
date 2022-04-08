@@ -4,8 +4,12 @@ import { DotsHorizontalIcon, HomeIcon, PencilIcon } from '@heroicons/react/solid
 import { SearchIcon, HashtagIcon, BellIcon, MailIcon, UserIcon, DotsCircleHorizontalIcon, BookmarkIcon, ClipboardListIcon } from '@heroicons/react/outline'
 import SidebarItems from './SidebarItems'
 import twitter from '../../public/twitter.png'
+import avatar from '../../public/avatar.png'
+import { signOut, useSession } from "next-auth/react"
 
 const Sidebar = () => {
+  const { data: session } = useSession();
+
   return (
     <div className=" max-w-[14%] md:max-w-[15%] xl:max-w-[23.5%] border-r-[1px] border-gray-100 border-b-[1px] flex flex-col items-center p-0 pt-[2px] h-screen xl:items-start xl:px-[3.1rem] flex-[.7] sticky top-0">
       <div className="hover:bg-blue-100 px-[10px] pt-[10px] rounded-full transition ease-out mb-2">
@@ -38,13 +42,15 @@ const Sidebar = () => {
         <h1 className="hidden text-white text-xl xl:inline xl:w-max">Tweet</h1>
       </div>
 
-      <div className="flex items-center justify-center xl:justify-start py-2 px-[10px] xl:px-3 space-x-3 mt-auto mb-3 rounded-full hover:bg-gray-200 xl:w-[110%] relative cursor-pointer transition ease-in-out">
-        <div className="rounded-full py-[7px] px-[15px] bg-blue-600">
-          <h1 className="text-lg text-white">V</h1>
-        </div>
-        <div className="hidden xl:block">
-          <h1 className="font-bold text-gray-800">Vince Garcia</h1>
-          <h1 className="text-gray-500">@vinxeeeee</h1>
+      <div 
+        className="flex items-center justify-center xl:justify-start py-2 px-[10px] xl:px-3 space-x-3 mt-auto mb-3 rounded-full hover:bg-gray-200 xl:w-[110%] relative cursor-pointer transition ease-in-out"
+        onClick={() => signOut()}
+        >
+          <img src={`${session?.user?.image || avatar}`} alt="" className='rounded-full' />
+        
+        <div className="hidden xl:block" >
+          <h1 className="font-bold text-gray-800">{session?.user?.name}</h1>
+          <h1 className="text-gray-500">@{session?.username}</h1>
         </div>
         <DotsHorizontalIcon className="hidden xl:block h-5 w-5 absolute right-3" />
       </div>     

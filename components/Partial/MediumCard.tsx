@@ -38,7 +38,7 @@ const MediumCard = () => {
 ]
 
   return (
-    <div className="mt-[18px] pt-[10px] rounded-2xl bg-gray-50">
+    <div className="mt-[18px] pt-[10px] rounded-2xl bg-gray-100">
       <div className="flex mb-[13px] px-5 ">
         <h1 className="text-[1.29rem] font-bold">Trends for you</h1>
         <div className="ml-auto cursor-pointer rounded-full hover:bg-gray-200 p-2 flex items-center transition ease-out">

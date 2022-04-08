@@ -1,13 +1,18 @@
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
 import { MongoClient } from "mongodb"
 
-const uri = process.env.MONGODB_URI
-const options = {
+interface Option {
+  useUnifiedTopology:boolean
+  useNewUrlParser:boolean
+}
+
+const uri:any = process.env.MONGODB_URI
+const options:any = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
 }
 
-let client
+let client:any
 let clientPromise: any
 
 if (!process.env.MONGODB_URI) {
