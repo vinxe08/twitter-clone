@@ -28,7 +28,6 @@ const Posts: React.FC<IProps> = ({posts}) => {
         setRealTimePost(responseData);
         setHandlePost(false)
         setUseSSRPosts(false)
-        console.log("Response Data",responseData)
       }
     }
 

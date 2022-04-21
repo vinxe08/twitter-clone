@@ -15,3 +15,8 @@ export const useSSRPostsState = atom({
   key: "useSSRPostsState",
   default: true,
 })
+
+export const likePostState = atom({
+  key: "likePostState",
+  default:false
+})

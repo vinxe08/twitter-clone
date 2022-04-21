@@ -18,6 +18,7 @@ type Props = {
 const Layout: NextPage<Props> = ({ children }) => {
   const loading = useRecoilValue(loadingState)
   const fullModal = useRecoilValue(fullPostModalState)
+  
 
   return (
     <div className="flex w-full sm:w-[99%] xl:w-[100%]">
@@ -29,12 +30,13 @@ const Layout: NextPage<Props> = ({ children }) => {
             color={"#FFF"}
             loading={loading}
           />
-        </div>}
-        <AnimatePresence>
+        </div>
+      }
+        {/* <AnimatePresence>
           { fullModal && 
               <Modal />
           }
-        </AnimatePresence>
+        </AnimatePresence> */}
       <Sidebar />
       <div className="flex flex-col flex-[2] border-r-[1px] max-w-[37.5rem] " >
         <Titlebar />

@@ -10,9 +10,10 @@ export default async function handler(req: NextApiRequest,
 
   if(method === "POST") {
     try {
-      await db
+      const post = await db
         .collection("posts")
-        .updateOne({_id: new ObjectId(body.id)},{$push:{"likes":body.likes}} )
+        .updateOne({_id: new ObjectId(body.id)},{$push:{"likes":body.likes}} );
+      res.status(201).json(post)
     } catch(error) {
        res.json(error)
     }
@@ -20,9 +21,11 @@ export default async function handler(req: NextApiRequest,
 
   if(method === 'DELETE'){
     try {
-      await db
-      .collection("posts")
-      .updateOne({_id: new ObjectId(body.id)},{$pull:{"likes":body.user}} )
+      const post = await db
+        .collection("posts")
+        .updateOne({_id: new ObjectId(body.id)},{$pull:{"likes":body.user}} );
+      res.status(201).json(post)
+
     } catch(error) {
       res.json(error)
     }
