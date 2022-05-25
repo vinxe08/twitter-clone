@@ -9,7 +9,7 @@ export const useLikePost = async (postID:string, likeValue:boolean) => {
   const likePost = async () => {
     if(liked) {
       setLiked(false)
-      await fetch('/api/liked', {
+      await fetch('/api/like', {
         method: "DELETE",
         body: JSON.stringify({
           id: postID,
@@ -21,7 +21,7 @@ export const useLikePost = async (postID:string, likeValue:boolean) => {
       })
     } else {
       setLiked(true)
-      await fetch('/api/liked', {
+      await fetch('/api/like', {
         method: "POST",
         body: JSON.stringify({
           id: postID,

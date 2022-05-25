@@ -8,8 +8,6 @@ import { fullPostModalState, loadingState } from '../atoms/modalAtom'
 import { useRecoilValue } from 'recoil'
 import { ClipLoader } from 'react-spinners'
 import Head from 'next/head'
-import { AnimatePresence } from 'framer-motion'
-import Modal from './Thread/Modal'
 
 type Props = {
   children: any
@@ -17,8 +15,6 @@ type Props = {
 
 const Layout: NextPage<Props> = ({ children }) => {
   const loading = useRecoilValue(loadingState)
-  const fullModal = useRecoilValue(fullPostModalState)
-  
 
   return (
     <div className="flex w-full sm:w-[99%] xl:w-[100%]">
@@ -32,11 +28,6 @@ const Layout: NextPage<Props> = ({ children }) => {
           />
         </div>
       }
-        {/* <AnimatePresence>
-          { fullModal && 
-              <Modal />
-          }
-        </AnimatePresence> */}
       <Sidebar />
       <div className="flex flex-col flex-[2] border-r-[1px] max-w-[37.5rem] " >
         <Titlebar />

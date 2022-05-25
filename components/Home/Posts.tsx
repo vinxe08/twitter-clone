@@ -39,14 +39,17 @@ const Posts: React.FC<IProps> = ({posts}) => {
 
   return (
     <>
-      {!useSSRPosts 
-        // if you add post through PostField -> this will work
-        ? realTimePost.map(tweet => <PostCard key={tweet._id} posts={tweet}/> ) 
+      {useSSRPosts 
         // if app refresh -> this will work
-        : posts.map(tweet => <PostCard key={tweet._id} posts={tweet}/> )
+        ? posts.map(tweet => <PostCard key={tweet._id} posts={tweet}/> )
+
+        // if you add post through PostField -> this will work
+        :  realTimePost.map(tweet => <PostCard key={tweet._id} posts={tweet}/> ) 
       }
     </>
   )
 }
 
 export default Posts
+
+

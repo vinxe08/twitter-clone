@@ -8,7 +8,7 @@ export const handlePostState = atom({
 
 export const getPostState = atom({
   key: "getPostState",
-  default: {} as IPosts
+  default: {} as IPosts | null
 })
 
 export const useSSRPostsState = atom({

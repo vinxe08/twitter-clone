@@ -1,8 +1,6 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import { getSession, useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { useRecoilValue } from 'recoil'
-import { postModalState } from '../../atoms/modalAtom'
 import PostField from '../../components/Home/PostField'
 import Posts from '../../components/Home/Posts'
 import Layout from '../../components/Layout'
@@ -62,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           name: post.name,
           photoUrl: post?.photoUrl || null,
           username: post.username,
-          email:post.email,
+          email:post.email || null,
           userImg: post.userImg,
           createdAt: post.createdAt,
           likes: post.likes || null

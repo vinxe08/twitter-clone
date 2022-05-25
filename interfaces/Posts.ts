@@ -9,4 +9,5 @@ export interface IPosts {
   username: string
   _id: string
   likes: any[]
+  comments:any[]
 }

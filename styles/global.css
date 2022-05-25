@@ -8,6 +8,9 @@
   .postIcon {
     @apply p-[7px] rounded-full text-gray-500 flex relative transition ease-in-out;
   }
+  .photoIcon {
+    @apply p-[7px] rounded-full text-white flex relative transition ease-in-out;
+  }
   .footerButton {
     @apply w-max text-gray-600 text-[0.850rem] hover:underline active:scale-95 cursor-pointer transition ease-out;
   }
