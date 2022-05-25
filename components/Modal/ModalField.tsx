@@ -88,26 +88,25 @@ const ModalField:React.FC<IProps> = ({post}) => {
       }).then(res => res.json())
     }
 
-    if(data) {
       // Sends Data in MongoDB
-      const response = await fetch('/api/comment', {
-        method: "POST",
-        body: JSON.stringify({
-          id:post?._id,
-          post: input,
-          name: session?.user?.name,
-          photoUrl: data?.url || null,
-          username: session?.username,
-          email:session?.user?.email,
-          userImg: session?.user?.image,
-          createdAt: new Date().toString(),
-          likes:[],
-          comment:[],
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    const response = await fetch('/api/comment', {
+      method: "POST",
+      body: JSON.stringify({
+        id:post?._id,
+        post: input,
+        name: session?.user?.name,
+        photoUrl: data?.url || null,
+        username: session?.username,
+        email:session?.user?.email,
+        userImg: session?.user?.image,
+        createdAt: new Date().toString(),
+        likes:[],
+        comment:[],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
 
       // If upload succeed
       if(response){
@@ -121,7 +120,7 @@ const ModalField:React.FC<IProps> = ({post}) => {
         icon: 'success',
         showConfirmButton: false,
         timer:1500,
-      }) }
+      }) 
     }
   }
 
