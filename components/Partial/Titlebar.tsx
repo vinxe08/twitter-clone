@@ -22,7 +22,7 @@ const Titlebar = () => {
   },[])
 
   return (
-    <div className="flex pl-[14px] pr-[6px] py-[8px] items-center cursor-pointer sticky top-0 bg-[rgba(255,255,255,0.93)] z-40">
+    <div className="flex pl-[14px] pr-[6px] py-[8px] items-center cursor-pointer sticky top-0 bg-[rgba(255,255,255,0.93)] z-50">
       {!routeState
         ? <h1 className="text-xl font-bold text-gray-800 ">Home</h1>
         : <div className='flex items-center space-x-9'>

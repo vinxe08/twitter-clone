@@ -30,7 +30,7 @@ const PostField = () => {
     reader.onload = (readerEvent: any) => {
       setDisplayImage(readerEvent.target.result);
     }
-    setSelectedFile(e.target.files[0]) // Holds the data of the image that may use in CLOUDINARY
+    setSelectedFile(e.target.files[0]) // Holds the data of the image that may send in CLOUDINARY
   }
 
   // Combines string and emoji in input field as value
@@ -85,6 +85,7 @@ const PostField = () => {
         setShowEmojis(false)
         setDisplayImage(null)
         setHandlePost(true)
+        setSelectedFile('')
         Swal.fire({
         title: 'Your tweet was send',
         icon: 'success',
@@ -95,7 +96,7 @@ const PostField = () => {
   }
 
   return (
-    <div className="flex w-full border-b-[1px] pt-[7px] px-4 border-gray-100 relative">
+    <div className="flex w-full border-b-[1px] pt-[7px] px-4 border-gray-100 relative z-40">
       
       <img src={`${session?.user?.image || avatar}`} alt="" className='mr-4 rounded-full h-12' />
       <div className="flex flex-col w-full">

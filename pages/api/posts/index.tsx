@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest,
     try {
       const post = await db
         .collection("posts")
-        .insertOne({...body, timestamp: new Timestamp() });
+        .insertOne({...body, timestamp: Date.now() });
       res.status(201).json(post)
     } catch(error) {
         res.status(500).json(error)

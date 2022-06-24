@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { ChatIcon, SwitchVerticalIcon, HeartIcon, UploadIcon } from '@heroicons/react/outline'
 import {
   DotsHorizontalIcon,
@@ -110,20 +109,19 @@ const PostCard: NextPage<IProps> = ({posts}) => {
             <DotsHorizontalIcon className="h-7 w-7 px-[0.35rem]  text-gray-600 hover:bg-blue-200 transition ease-in-out rounded-full absolute right-2 " />
           </div>
           <span>{posts.post}</span>
-          <div className="w-max h-max mt-2 relative block min-w-full">
+          <div className="mt-2 relative flex min-w-full max-h-[32rem]">
             {posts.photoUrl  &&
-              <Image 
-                src={`${posts.photoUrl}`}
-                alt="Overhaul Vs Deku"
-                height={60}
-                width={100}
-                layout='responsive'
-                className="rounded-xl"
-                priority
-                onClick={(e:any) => 
-                  { e.stopPropagation()
-                    showPostImage(posts)} }
-              /> }
+            <div className='flex'>
+                <img 
+                  src={`${posts.photoUrl}`}
+                  alt="Overhaul Vs Deku"
+                  className="object-contain rounded-xl"
+                  onClick={(e:any) => 
+                    { e.stopPropagation()
+                      showPostImage(posts)} }
+                /> 
+              </div>
+              }
             </div>
             <div className="flex space-x-12 md:space-x-20 lg:space-x-28 pb-[6px]">
               <div 
