@@ -1,10 +1,10 @@
 import { MongoClient } from "mongodb";
 
-let uri:any = process.env.MONGODB_URI;
-let dbName:any = process.env.MONGODB_DB;
+let uri = process.env.MONGODB_URI;
+let dbName = process.env.MONGODB_DB;
 
-let cachedClient: any = null;
-let cachedDb: any = null;
+let cachedClient = null;
+let cachedDb = null;
 
 if(!uri) {
   throw new Error(
