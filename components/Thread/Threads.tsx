@@ -6,40 +6,17 @@ import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { handleCommentState, useSSRCommentsState } from '../../atoms/commentAtom'
 import CommentCard from './CommentCard';
+import useFetchComment from '../../hooks/useFetchComment';
 
 interface IThread {
   threads: IPosts[]
 }
 
 const Comment: React.FC<IThread> = ({threads}) => {
-  const [realTimeComment, setRealTimeComment] = useState<IPosts[]>([])
-  const [handleComment, setHandleComment] = useRecoilState(handleCommentState)
-  const [useSSRComments, setUseSSRComments] = useRecoilState(useSSRCommentsState)
   const router = useRouter()
   const { id } = router.query
 
-  // For Realtime comment
-  useEffect(() => {
-    let mounted = true;
-    const fetchComments = async () => {
-      const response = await fetch(`/api/comment/${id}`, {
-        method: "GET",
-        headers: { "Content-Type":"application/json" }
-      });
-
-      const responseData = await response.json();
-      if(mounted) {
-        setRealTimeComment(responseData);
-        setHandleComment(false);
-        setUseSSRComments(false);
-      }
-    }
-
-    fetchComments()
-    return () => {
-      mounted = false;
-    }
-  }, [handleComment])
+  const { realTimeComment, useSSRComments } = useFetchComment(id)
 
   return (
     <>

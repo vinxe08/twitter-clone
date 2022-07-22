@@ -5,6 +5,7 @@ import { IPosts } from "../../interfaces/Posts";
 import { NextPage } from "next";
 import ModalCard from "./ModalCard";
 import { handleCommentState, useSSRCommentsState } from "../../atoms/commentAtom";
+import useFetchComment from "../../hooks/useFetchComment";
 
 const gifYouUp = {
   hidden: {
@@ -30,43 +31,22 @@ const gifYouUp = {
 };
 
 interface IProps {
-  post: IPosts | null
+  post: IPosts
 }
 
 const Modal: NextPage<IProps> = ({post}) => {
   const { query: {id} } = useRouter()
-  const [realTimeComment, setRealTimeComment] = useState<IPosts | null>()
-  const [handleComment, setHandleComment] = useRecoilState(handleCommentState)
-  const [useSSRComments, setUseSSRComments] = useRecoilState(useSSRCommentsState)
 
-  // For Realtime comment
-  useEffect(() => {
-    
-    let mounted = true;
-    const fetchComments = async () => {
-      const response = await fetch(`/api/comment/${id}`, {
-        method: "GET",
-        headers: { "Content-Type":"application/json" }
-      });
-
-      const responseData = await response.json();
-      if(mounted) {
-        setRealTimeComment(responseData[0]);
-        setHandleComment(false);
-        setUseSSRComments(false);
-      }
-    }
-
-    fetchComments()
-    return () => {
-      mounted = false;
-    }
-  }, [handleComment])
+  const { realTimeComment, useSSRComments } = useFetchComment(id)
 
   return (
      <>
         {!useSSRComments && realTimeComment
-          ? <ModalCard post={realTimeComment}/>
+          ? realTimeComment.map(comment => 
+            <div key={comment._id}>
+              <ModalCard post={comment}/>
+            </div>
+            )
           : <ModalCard post={post}/>
         }
     </>

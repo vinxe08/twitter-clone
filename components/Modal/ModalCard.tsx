@@ -5,6 +5,7 @@ import ModalPhoto from "./ModalPhoto";
 import CommentCard from "../Thread/CommentCard";
 import ModalField from "./ModalField";
 import ModalPostCard from "./ModalPostCard";
+import { useState } from "react";
 
 const gifYouUp = {
   hidden: {
@@ -30,13 +31,14 @@ const gifYouUp = {
 };
 
 interface IProps {
-  post: IPosts | null
+  post: IPosts
 }
 
 const ModalCard: React.FC<IProps> = ({post}) => {
   const { push } = useRouter()
-
   const closeModal = () => { push('/thread') }
+
+  const [postContent, setPostContent] = useState()
 
   return (
       <motion.div className='fixed w-full h-full left-0 top-0 bg-[#030303cb] z-40 flex'

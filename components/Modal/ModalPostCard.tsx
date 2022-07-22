@@ -6,56 +6,16 @@ import {
 } from "@heroicons/react/solid";
 import { IPosts } from '../../interfaces/Posts';
 import { useSession } from 'next-auth/react';
+import useFetchLike from '../../hooks/useFetchLike';
 
 interface IProps {
-  post: IPosts | null
+  post: IPosts
 }
-
 
 const ModalPostCard:React.FC<IProps> = ({post}) => {
   const {data: session} = useSession()
+  const { likes, liked, likePost } = useFetchLike(post)
   
-  const [liked, setLiked] = useState<boolean | null>()
-  const [likes, setLikes] = useState<any[] | null>()
-
-  const likePost = async () => {
-    if(liked) {
-      setLiked(false)
-      setLikes(post?.likes?.filter( item => item != session?.user?.name))// Manually removing in likes
-
-      // Removing the name(session.user.name) in DB
-      await fetch('/api/like', {
-        method: "DELETE",
-        body: JSON.stringify({
-          id: post?._id,
-          user:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    } else {
-      setLiked(true)
-      setLikes([session?.user?.name])// Manually adding in likes
-
-      // Adding the name(session.user.name) in DB
-      await fetch('/api/like', {
-        method: "POST",
-        body: JSON.stringify({
-          id: post?._id,
-          likes:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        }, }) 
-    }
-  }
-
-  useEffect(() => {
-    setLiked(post?.likes?.includes(session?.user?.name))
-    setLikes(post?.likes?.map( pst => {return pst}))
-  },[post])
-
   return (
     <div className='px-4 py-3'>
           <div className='flex'>

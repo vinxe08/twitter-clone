@@ -15,6 +15,7 @@ import { routingState } from '../../atoms/routingAtom';
 import { NextPage } from 'next';
 import ModalComment from '../Thread/ModalComment';
 import TimeAgo from 'timeago-react';
+import useFetchLike from '../../hooks/useFetchLike';
 
 interface IProps {
   posts: IPosts
@@ -27,9 +28,9 @@ const PostCard: NextPage<IProps> = ({posts}) => {
   const [fullModal, setFullModal] = useRecoilState(fullPostModalState)
   const [commentModal, setCommentModal] = useRecoilState(commentModalState)
   const [postState, setPostState] = useRecoilState(getPostState)
-  const [liked, setLiked] = useState(false)
-  const [likes, setLikes] = useState<any[]>([])
   const [routeState, setRouteState] = useRecoilState(routingState)
+
+  const { likes, liked, likePost } = useFetchLike(posts)
 
   const redirectTo = (postsId:any) => {
     push(`/thread/${postsId}`)
@@ -46,43 +47,6 @@ const PostCard: NextPage<IProps> = ({posts}) => {
     setCommentModal(true)
     setPostState(post)
   }
-
-  // A function that if like is true, remove the element(session.user.name) in DB : add element(session.user.name) in DB 
-  const likePost = async () => {
-    if(liked) {
-      setLiked(false)
-      setLikes(posts?.likes?.filter(item => item != session?.user?.name))// Manually removing in likes
-
-      await fetch('/api/like', {
-        method: "DELETE",
-        body: JSON.stringify({
-          id: posts._id,
-          user:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    } else {
-      setLiked(true)
-      setLikes([session?.user?.name])// Manually adding in likes
-
-      await fetch('/api/like', {
-        method: "POST",
-        body: JSON.stringify({
-          id: posts._id,
-          likes:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        }, })
-    }
-  }
-
-  useEffect(() => {
-    setLiked(posts?.likes?.includes(session?.user?.name))// Checking if the user is in list who likes
-    setLikes(posts?.likes.map(like => {return like }))
-  },[posts])
 
   return (
     <div    

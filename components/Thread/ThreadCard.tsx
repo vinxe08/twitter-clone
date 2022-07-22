@@ -10,6 +10,7 @@ import { NextPage } from 'next'
 import { useRecoilState } from 'recoil'
 import { loadingState } from '../../atoms/modalAtom'
 import { routingState } from '../../atoms/routingAtom'
+import useFetchLike from '../../hooks/useFetchLike';
 
 interface IThread {
   thread: IPosts
@@ -19,49 +20,13 @@ const ThreadCard: NextPage<IThread> = ({thread}) => {
   const {data: session} = useSession()
   const [loading, setLoading] = useRecoilState(loadingState)
   const [routeState, setRouteState] = useRecoilState(routingState)
-  const [liked, setLiked] = useState<boolean>(false)
-  const [likes, setLikes] = useState<any[]>([])
 
-  // A function that if like is true, remove the element(session.user.name) in DB : add element(session.user.name) in DB 
-  const likePost = async () => {
-    if(liked) {
-      setLiked(false)
-      setLikes(thread?.likes?.filter(item => item != session?.user?.name))// Manually removing in likes
-      await fetch('/api/like', {
-        method: "DELETE",
-        body: JSON.stringify({
-          id: thread._id,
-          user:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    } else {
-      setLiked(true)
-      setLikes([session?.user?.name])// Manually adding in likes
-
-      await fetch('/api/like', {
-        method: "POST",
-        body: JSON.stringify({
-          id: thread._id,
-          likes:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        }, })
-    }
-  }
+  const { likes, liked, likePost } = useFetchLike(thread)
 
   useEffect(() => {
     setLoading(false)
     setRouteState(true)
   },[])
-
-  useEffect(() => {
-    setLiked(thread?.likes?.includes(session?.user?.name))
-    setLikes(thread?.likes.map(like => {return like }))
-  }, [thread])
 
   return (
     <div className='mt-[.5rem]'>

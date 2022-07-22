@@ -96,7 +96,7 @@ const PostField = () => {
   }
 
   return (
-    <div className="flex w-full border-b-[1px] pt-[7px] px-4 border-gray-100 relative z-40">
+    <div className="flex w-full border-b-[1px] pt-[7px] px-4 border-gray-100 relative z-30">
       
       <img src={`${session?.user?.image || avatar}`} alt="" className='mr-4 rounded-full h-12' />
       <div className="flex flex-col w-full">

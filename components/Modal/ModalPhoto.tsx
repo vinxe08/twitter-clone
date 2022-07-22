@@ -10,19 +10,20 @@ import { useSession } from 'next-auth/react';
 import { useRecoilState } from 'recoil';
 import { loadingState } from '../../atoms/modalAtom';
 import { routingState } from '../../atoms/routingAtom';
+import useFetchLike from '../../hooks/useFetchLike';
 
 interface IProps {
-  post: IPosts | null
+  post: IPosts
 }
 
 const ModalPhoto: React.FC<IProps> = ({post}) => {
   const { push } = useRouter()
   const { data: session } = useSession()
-  const [liked, setLiked] = useState<boolean | null>()
-  const [likes, setLikes] = useState<any[] | null>()
   const [showTweet, setShowTweet] = useState<boolean>(false)
   const [loading, setLoading] = useRecoilState(loadingState)
   const [routeState, setRouteState] = useRecoilState(routingState)
+
+  const { likes, liked, likePost } = useFetchLike(post)
 
   const closeModal = () => { push('/thread') }
 
@@ -31,44 +32,6 @@ const ModalPhoto: React.FC<IProps> = ({post}) => {
     setLoading(true)
     setRouteState(true)
   }
-
-  const likePost = async () => {
-    if(liked) {
-      setLiked(false)
-      setLikes(post?.likes?.filter( item => item != session?.user?.name))// Manually removing in likes
-
-      // Removing the name(session.user.name) in DB
-      await fetch('/api/like', {
-        method: "DELETE",
-        body: JSON.stringify({
-          id: post?._id,
-          user:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    } else {
-      setLiked(true)
-      setLikes([session?.user?.name])// Manually adding in likes
-
-      // Adding the name(session.user.name) in DB
-      await fetch('/api/like', {
-        method: "POST",
-        body: JSON.stringify({
-          id: post?._id,
-          likes:session?.user?.name
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        }, }) 
-    }
-  }
-
-  useEffect(() => {
-    setLiked(post?.likes?.includes(session?.user?.name))
-    setLikes(post?.likes?.map( pst => {return pst}))
-  },[post])
 
   return (
     <div className="h-full flex flex-col flex-grow items-center justify-items-start relative" >

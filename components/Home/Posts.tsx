@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'
-import { postModalState } from '../../atoms/modalAtom'
-import { handlePostState, useSSRPostsState } from '../../atoms/postAtom'
+import React from 'react'
+import useFetchPost from '../../hooks/useFetchAllPost'
 import { IPosts } from '../../interfaces/Posts'
 import PostCard from './PostCard'
 
@@ -10,32 +8,7 @@ interface IProps {
 }
 
 const Posts: React.FC<IProps> = ({posts}) => {
-  const [postModal, setPostModal] = useRecoilState(postModalState)
-  const [realTimePost, setRealTimePost] = useState<IPosts[]>([])
-  const [handlePost, setHandlePost] = useRecoilState(handlePostState)
-  const [useSSRPosts, setUseSSRPosts] = useRecoilState(useSSRPostsState);
-
-  useEffect(() => {
-    let mounted = true;
-    const fetchPosts = async () => {
-      const response = await fetch("/api/posts", {
-        method: "GET",
-        headers: { "Content-Type":"application/json" }
-      });
-
-      const responseData = await response.json();
-      if(mounted) {
-        setRealTimePost(responseData);
-        setHandlePost(false)
-        setUseSSRPosts(false)
-      }
-    }
-
-    fetchPosts()
-    return () => {
-      mounted = false;
-    }
-  }, [handlePost])
+  const { realTimePost, useSSRPosts } = useFetchPost()
 
   return (
     <>
